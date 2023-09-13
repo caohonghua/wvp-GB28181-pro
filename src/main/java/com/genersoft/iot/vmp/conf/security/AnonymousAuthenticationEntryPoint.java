@@ -3,6 +3,8 @@ package com.genersoft.iot.vmp.conf.security;
 import com.alibaba.fastjson2.JSONObject;
 import com.genersoft.iot.vmp.conf.security.dto.JwtUser;
 import com.genersoft.iot.vmp.vmanager.bean.ErrorCode;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.MediaType;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.AuthenticationException;
@@ -20,7 +22,9 @@ import java.nio.charset.StandardCharsets;
  * @author lin
  */
 @Component
-public class    AnonymousAuthenticationEntryPoint implements AuthenticationEntryPoint {
+public class AnonymousAuthenticationEntryPoint implements AuthenticationEntryPoint {
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(AnonymousAuthenticationEntryPoint.class);
 
     @Override
     public void commence(HttpServletRequest request, HttpServletResponse response, AuthenticationException e) {
@@ -42,7 +46,7 @@ public class    AnonymousAuthenticationEntryPoint implements AuthenticationEntry
         try {
             response.getWriter().print(jsonObject.toJSONString());
         } catch (IOException ioException) {
-            ioException.printStackTrace();
+            LOGGER.error("", ioException);
         }
     }
 }

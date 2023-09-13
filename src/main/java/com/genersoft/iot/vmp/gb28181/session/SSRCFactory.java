@@ -118,7 +118,8 @@ public class SSRCFactory {
      */
     public boolean hasMediaServerSSRC(String mediaServerId) {
         String redisKey = SSRC_INFO_KEY + userSetting.getServerId() + "_" + mediaServerId;
-        return redisTemplate.opsForSet().members(redisKey) != null;
+        Set<String> set = redisTemplate.opsForSet().members(redisKey);
+        return set != null && !set.isEmpty();
     }
 
 }
